@@ -90,19 +90,19 @@ public class ProxyYarnAppMaster {
     // signal to the RM
     log.info("Application completed. Signalling finish to RM");
 
-    FinalApplicationStatus appStatus;
+//    FinalApplicationStatus appStatus;
     String appMessage = null;
     success = true;
-    if (numFailedContainers.get() == 0 && numCompletedContainers.get() == numTotalContainers) {
-      appStatus = FinalApplicationStatus.SUCCEEDED;
-    } else {
-      appStatus = FinalApplicationStatus.FAILED;
-      appMessage = "Diagnostics." + ", total=" + numTotalContainers + ", completed=" + numCompletedContainers.get() + ", allocated="
-          + numAllocatedContainers.get() + ", failed=" + numFailedContainers.get();
-      success = false;
-    }
+//    if (numFailedContainers.get() == 0 && numCompletedContainers.get() == numTotalContainers) {
+//      appStatus = FinalApplicationStatus.SUCCEEDED;
+//    } else {
+//      appStatus = FinalApplicationStatus.FAILED;
+//      appMessage = "Diagnostics." + ", total=" + numTotalContainers + ", completed=" + numCompletedContainers.get() + ", allocated="
+//          + numAllocatedContainers.get() + ", failed=" + numFailedContainers.get();
+//      success = false;
+//    }
     try {
-      amRMClient.unregisterApplicationMaster(appStatus, appMessage, null);
+      amRMClient.unregisterApplicationMaster(FinalApplicationStatus.SUCCEEDED, appMessage, null);
     } catch (YarnException ex) {
       log.error("Failed to unregister application", ex);
     } catch (IOException e) {
